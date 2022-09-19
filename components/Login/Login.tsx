@@ -17,6 +17,14 @@ type ResponseType = {
   token: string;
 };
 
+type DataType = {
+  authenticated: boolean;
+  first_name: string;
+  last_name: string;
+  email: string;
+  id: number | null;
+};
+
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email")
@@ -34,9 +42,18 @@ const SignupSchema = Yup.object().shape({
 
 export const Login = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState(false)
-  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
+  const handleUser = async (data : DataType) => {
+    await axios
+      .post("/userinfo", {
+        first_name: data.first_name,
+        last_name: data.last_name,
+        email: data.email,
+        user_id: data.id,
+      })
+  };
   const handleData = async () => {
     const { data } = await axios.get("/user");
     if (data) {
@@ -49,6 +66,7 @@ export const Login = () => {
           id: data.id,
         })
       );
+      handleUser(data );
     } else {
       dispatch(
         setAuthState({
@@ -60,9 +78,9 @@ export const Login = () => {
         })
       );
     }
-  }
+  };
   const handleSubmit = async (values: FormContext) => {
-    setLoading(true)
+    setLoading(true);
     await axios
       .post<ResponseType>("/login", values, {
         withCredentials: true,
@@ -72,11 +90,11 @@ export const Login = () => {
           "Authorization"
         ] = `Bearer ${res.data.token}`;
         router.push("/dashboard");
-        handleData()
-        setLoading(false)
+        handleData();
+        setLoading(false);
       })
       .catch((err) => {
-        setLoading(false)
+        setLoading(false);
         toast.error(
           err.response.data?.detail
             .toLowerCase()

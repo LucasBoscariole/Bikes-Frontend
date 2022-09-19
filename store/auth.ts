@@ -11,6 +11,13 @@ export interface AuthState {
     email: string;
     id: number | null;
   };
+  userInfo: {
+    image_url: string;
+    zip_code: number | null;
+    street: string;
+    state: string;
+    country: string;
+  };
 }
 
 const initialState: AuthState = {
@@ -19,7 +26,14 @@ const initialState: AuthState = {
     first_name: "",
     last_name: "",
     email: "",
-    id: null
+    id: null,
+  },
+  userInfo: {
+    image_url: "",
+    zip_code: null,
+    street: "",
+    state: "",
+    country: "",
   },
 };
 
@@ -29,12 +43,21 @@ export const authSlice = createSlice({
   reducers: {
     setAuthState(state, action) {
       state.authenticated = action.payload.authenticated;
-      state.user =  {
-       first_name: action.payload.first_name,
-       last_name: action.payload.last_name,
-       email: action.payload.email,
-       id: action.payload.id
-     }
+      state.user = {
+        first_name: action.payload.first_name,
+        last_name: action.payload.last_name,
+        email: action.payload.email,
+        id: action.payload.id,
+      };
+    },
+    setUserInfoState(state, action) {
+      state.userInfo = {
+        image_url: action.payload.image_url,
+        zip_code: action.payload.zip_code,
+        street: action.payload.street,
+        state: action.payload.state,
+        country: action.payload.country,
+      };
     },
   },
 
@@ -49,7 +72,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setAuthState } = authSlice.actions;
+export const { setAuthState, setUserInfoState } = authSlice.actions;
 
 export const selectAuthState = (state: AppState) => state.auth;
 
