@@ -82,7 +82,9 @@ export const Login = () => {
   const handleSubmit = async (values: FormContext) => {
     setLoading(true);
     await axios
-      .post<ResponseType>("/login", values)
+      .post<ResponseType>("/login", values, {
+        withCredentials: true,
+      })
       .then((res: any) => {
         axios.defaults.headers.common[
           "Authorization"
