@@ -82,13 +82,12 @@ export const Login = () => {
   const handleSubmit = async (values: FormContext) => {
     setLoading(true);
     await axios
-      .post<ResponseType>("/login", values, {
-        withCredentials: true,
-      })
+      .post<ResponseType>("/login", values)
       .then((res: any) => {
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${res.data.token}`;
+        console.log(res.data.token)
         router.push("/dashboard");
         handleData();
         setLoading(false);
