@@ -98,10 +98,10 @@ const UserView = () => {
             className="hidden"
           />
           {userInfo.image_url ? (
-            <Image
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
               src={"http://localhost:8000" + userInfo.image_url}
               alt={user.first_name}
-              layout="fill"
               className="object-cover w-full h-full"
             />
           ) : (
