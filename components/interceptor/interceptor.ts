@@ -21,7 +21,7 @@ axios.interceptors.response.use(
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${response.data.token}`;
-
+        console.log(response.data.token)
         // Redo last request
         return axios(error.config);
       }

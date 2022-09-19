@@ -89,7 +89,6 @@ export const Login = () => {
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${res.data.token}`;
-        console.log(res.data.token)
         router.push("/dashboard");
         handleData();
         setLoading(false);
