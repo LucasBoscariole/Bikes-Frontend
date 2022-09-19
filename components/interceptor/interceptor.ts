@@ -9,8 +9,7 @@ axios.interceptors.response.use(
   async (error) => {
     if (
       error.response.status === 403 &&
-      !refresh &&
-      error.response.data.detail === "unauthenticated"
+      !refresh 
     ) {
       refresh = true;
       const response = await axios.post(
