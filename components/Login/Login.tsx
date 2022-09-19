@@ -95,13 +95,14 @@ export const Login = () => {
       })
       .catch((err) => {
         setLoading(false);
-        toast.error(
-          err.response.data?.detail
-            .toLowerCase()
-            .replace(/\w/, (firstLetter: string) =>
-              firstLetter.toUpperCase()
-            ) ?? "An error happen!"
-        );
+        console.log(err)
+        // toast.error(
+        //   err.response.data?.detail
+        //     .toLowerCase()
+        //     .replace(/\w/, (firstLetter: string) =>
+        //       firstLetter.toUpperCase()
+        //     ) ?? "An error happen!"
+        // );
       });
   };
 
