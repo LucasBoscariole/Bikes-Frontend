@@ -21,7 +21,7 @@ axios.interceptors.response.use(
         {},
         { withCredentials: true }
       );
-      console.log(response)
+      console.log('response', response)
       if (response.status === 200) {
         axios.defaults.headers.common[
           "Authorization"
