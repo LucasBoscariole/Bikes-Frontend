@@ -7,9 +7,12 @@ let refresh = false;
 axios.interceptors.response.use(
   (resp) => resp,
   async (error) => {
+    console.log('interceptor error')
+    console.log(error)
     if (
       error.response.status === 403 &&
-      !refresh 
+      !refresh &&
+      error.response.data.detail === "unauthenticated"
     ) {
       refresh = true;
       const response = await axios.post(
@@ -17,12 +20,11 @@ axios.interceptors.response.use(
         {},
         { withCredentials: true }
       );
-      console.log(response)
       if (response.status === 200) {
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${response.data.token}`;
-        console.log(response.data.token)
+
         // Redo last request
         return axios(error.config);
       }
