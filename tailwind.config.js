@@ -12,7 +12,7 @@ module.exports = {
       white: "#fff",
       black: "#000",
       greymedium: '#3d3d3d',
-      greybackground: '#e4e4e4'
+      greybackground: '#f2f2f2'
     },
     fontFamily: {
       'Primary': ['Inter', 'sans-serif'],

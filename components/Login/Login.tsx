@@ -4,6 +4,9 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setAuthState } from "../../store/auth";
 
 type FormContext = {
   email: string;
@@ -31,8 +34,35 @@ const SignupSchema = Yup.object().shape({
 
 export const Login = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false)
+  const dispatch = useDispatch()
 
+  const handleData = async () => {
+    const { data } = await axios.get("/user");
+    if (data) {
+      dispatch(
+        setAuthState({
+          authenticated: true,
+          first_name: data.first_name,
+          last_name: data.last_name,
+          email: data.email,
+          id: data.id,
+        })
+      );
+    } else {
+      dispatch(
+        setAuthState({
+          authenticated: false,
+          first_name: "",
+          last_name: "",
+          email: "",
+          id: null,
+        })
+      );
+    }
+  }
   const handleSubmit = async (values: FormContext) => {
+    setLoading(true)
     await axios
       .post<ResponseType>("/login", values, {
         withCredentials: true,
@@ -42,9 +72,11 @@ export const Login = () => {
           "Authorization"
         ] = `Bearer ${res.data.token}`;
         router.push("/dashboard");
+        handleData()
+        setLoading(false)
       })
       .catch((err) => {
-        console.log(err)
+        setLoading(false)
         toast.error(
           err.response.data?.detail
             .toLowerCase()
@@ -95,6 +127,7 @@ export const Login = () => {
             </div>
             <button
               type="submit"
+              disabled={loading}
               className="flex items-center justify-center w-full h-10 mt-3 text-white duration-300 border rounded outline-none border-primary bg-primary hover:bg-secondary hover:border-secondary"
             >
               Submit

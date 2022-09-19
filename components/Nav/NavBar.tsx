@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAuthState, setAuthState } from "../../store/auth";
 import { HamburgerStandReverse } from "react-animated-burgers";
 import axios from "axios";
+import { FaUser } from "react-icons/fa";
 
 const NavBar = () => {
   const { authenticated } = useSelector(selectAuthState);
@@ -35,25 +36,26 @@ const NavBar = () => {
             first_name: "",
             last_name: "",
             email: "",
-            id: null
+            id: null,
           })
         );
       }
     })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  
   const logout = async () => {
     await axios.post("/logout", {}, { withCredentials: true });
     axios.defaults.headers.common["Authorization"] = "";
-    dispatch(setAuthState({
-      authenticated: false,
-      first_name: "",
-      last_name: "",
-      email: "",
-      id: null
-    }));
+    dispatch(
+      setAuthState({
+        authenticated: false,
+        first_name: "",
+        last_name: "",
+        email: "",
+        id: null,
+      })
+    );
   };
 
   return (
@@ -67,12 +69,15 @@ const NavBar = () => {
         <div className="items-center hidden gap-5 laptop:flex">
           {authenticated ? (
             <>
-                <button onClick={logout} className="flex items-center justify-center w-40 h-10 text-white capitalize duration-300 rounded-md bg-secondary hover:bg-thrid">
-                  logout
-                </button>
+              <button
+                onClick={logout}
+                className="flex items-center justify-center w-40 h-10 text-white capitalize duration-300 rounded-md bg-secondary hover:bg-thrid"
+              >
+                logout
+              </button>
               <Link href="/dashboard" passHref>
-                <a className="flex items-center justify-center w-40 h-10 text-white capitalize duration-300 rounded-md bg-primary hover:bg-secondary">
-                  dashboard
+                <a className="flex items-center justify-center w-10 h-10 text-black duration-300 border rounded-full bg-greybackground border-greymedium hover:bg-greymedium hover:text-white">
+                  <FaUser />
                 </a>
               </Link>
             </>
