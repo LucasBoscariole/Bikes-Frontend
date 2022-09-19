@@ -15,6 +15,7 @@ axios.interceptors.response.use(
       error.response.data.detail === "unauthenticated"
     ) {
       refresh = true;
+      console.log('im here')
       const response = await axios.post(
         "/refresh",
         {},
