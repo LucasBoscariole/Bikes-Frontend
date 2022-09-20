@@ -70,7 +70,7 @@ const NavBar = () => {
           {authenticated ? (
             <>
               <button
-                // onClick={() => logout()}
+                onClick={logout}
                 className="flex items-center justify-center w-40 h-10 text-white capitalize duration-300 rounded-md bg-secondary hover:bg-thrid"
               >
                 logout
