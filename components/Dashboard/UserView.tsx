@@ -36,7 +36,7 @@ const UserView = () => {
           userInfo.country &&
           userInfo.state + "||" + userInfo.country,
       })
-      .then((res) => toast.success('Data Changed!'))
+      .then((res) => toast.success("Data Changed!"))
       .catch((err) =>
         toast.error(
           Object.keys(err.response.data)[0] +
@@ -46,12 +46,10 @@ const UserView = () => {
       );
   };
   const hiddenFileInput = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const [loader, setLoader] = useState<Boolean>(false);
   const handleClick = () => {
     hiddenFileInput.current.click();
   };
   const handleChange = async (event: any) => {
-    setLoader(true);
     const fileUploaded = event.target.files[0];
     await axios
       .put(
@@ -68,14 +66,12 @@ const UserView = () => {
       .then((res) => {
         dispatch(
           setUserInfoState({
-            image_url: '/media/user_image/' + fileUploaded.name,
+            image_url: "/media/user_image/" + fileUploaded.name,
           })
-        )
-        setLoader(false);
-        toast.success('Image Changed');
+        );
+        toast.success("Image Changed");
       })
       .catch((err) => {
-        setLoader(false);
         toast.error(
           Object.keys(err.response.data)[0] +
             " : " +
