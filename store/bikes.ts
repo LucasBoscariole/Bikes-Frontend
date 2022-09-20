@@ -2,17 +2,24 @@ import { createSlice } from "@reduxjs/toolkit";
 import { AppState } from "./store";
 import { HYDRATE } from "next-redux-wrapper";
 
-interface BikeFormat {
+export interface BikeFormat {
   id: number,
-
+  description: string,
+  image_url: string,
+  is_rented: boolean,
+  name: string,
+  owner_id: number,
+  price: number 
 }
 
 interface BikesState {
- allBikes: BikeFormat[] | null
+ allBikes: BikeFormat[] | null,
+ bikesByUser: BikeFormat[] | null
 }
 
 const initialState: BikesState = {
- allBikes: null
+ allBikes: [],
+ bikesByUser: []
 };
 
 export const bikeSlice = createSlice({
@@ -21,6 +28,9 @@ export const bikeSlice = createSlice({
   reducers: {
     setAllBikes(state, action) {
      state.allBikes = action.payload
+    },
+    setUserBikes(state, action) {
+     state.bikesByUser = action.payload
     },
   },
 
@@ -35,7 +45,7 @@ export const bikeSlice = createSlice({
   },
 });
 
-export const { setAllBikes } = bikeSlice.actions;
+export const { setAllBikes, setUserBikes } = bikeSlice.actions;
 
 export const selectBikeState = (state: AppState) => state.bike;
 
