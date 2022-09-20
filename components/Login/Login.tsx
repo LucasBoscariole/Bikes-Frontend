@@ -79,6 +79,7 @@ export const Login = () => {
       );
     }
   };
+  const [token,setToken] = useState('')
   const handleSubmit = async (values: FormContext) => {
     setLoading(true);
     await axios
@@ -89,6 +90,7 @@ export const Login = () => {
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${res.data.token}`;
+        setToken(res.data.token)
         router.push("/dashboard");
         handleData();
         setLoading(false);
@@ -104,6 +106,9 @@ export const Login = () => {
             ) ?? "An error happen!"
         );
       });
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${token}`;
   };
 
   return (
