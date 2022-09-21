@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setAuthState } from "../../store/auth";
+import { setUserBikes } from "../../store/bikes";
 
 type FormContext = {
   email: string;
@@ -66,7 +67,8 @@ export const Login = () => {
           id: data.id,
         })
       );
-      handleUser(data );
+      dispatch(setUserBikes(null));
+      handleUser(data);
     } else {
       dispatch(
         setAuthState({

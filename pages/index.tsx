@@ -1,22 +1,20 @@
 import type { NextPage } from "next";
-import { BikeFormat } from "../store/bikes";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import Homepage from "../components/Homepage/Homepage";
+import { BikeFormat, setAllBikes } from "../store/bikes";
 
 interface DataInterface {
-  bikes: BikeFormat[]
+  bikes: BikeFormat[];
 }
 
 const Home = ({ bikes }: DataInterface) => {
-  return (
-    <div>
-      {bikes.map((item: BikeFormat) => {
-        return (
-          <>
-            <h1>{item.name}</h1>
-          </>
-        );
-      })}
-    </div>
-  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setAllBikes(bikes));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return <Homepage bikes={bikes} />;
 };
 
 export default Home;

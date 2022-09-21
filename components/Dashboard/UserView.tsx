@@ -1,10 +1,10 @@
 import axios from "axios";
-import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAuthState, setUserInfoState } from "../../store/auth";
+import { selectBikeState } from "../../store/bikes";
 
 const UserView = () => {
   const { user, userInfo } = useSelector(selectAuthState);
@@ -80,7 +80,7 @@ const UserView = () => {
       });
   };
   return (
-    <div>
+    <div className="w-full laptop:w-[78%]">
       <div className="grid items-center justify-start gap-3 laptop:gap-10 laptop:flex">
         <button
           className="relative flex items-center justify-center w-20 h-20 overflow-hidden text-black duration-300 border rounded-full laptop:w-40 laptop:h-40 bg-greybackground border-greymedium hover:bg-greymedium hover:text-white"
@@ -90,7 +90,7 @@ const UserView = () => {
             accept="image/png, image/jpeg"
             type={"file"}
             ref={hiddenFileInput}
-            onChange={handleChange}
+            onChange={(event) => handleChange(event)}
             className="hidden"
           />
           {userInfo.image_url ? (
