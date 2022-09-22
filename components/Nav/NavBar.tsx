@@ -5,6 +5,7 @@ import { selectAuthState, setAuthState } from "../../store/auth";
 import { HamburgerStandReverse } from "react-animated-burgers";
 import axios from "axios";
 import { FaUser } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 const NavBar = () => {
   const { authenticated } = useSelector(selectAuthState);
@@ -43,7 +44,7 @@ const NavBar = () => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  const router = useRouter();
   const logout = async () => {
     await axios.post("/logout", {}, { withCredentials: true });
     axios.defaults.headers.common["Authorization"] = "";
@@ -56,6 +57,7 @@ const NavBar = () => {
         id: null,
       })
     );
+    router.push("/");
   };
 
   return (
